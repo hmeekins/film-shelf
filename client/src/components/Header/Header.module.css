@@ -1,0 +1,44 @@
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    background-color: var(--color-surface);
+    box-shadow: 0 2px 8px #121212;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo h1 span {
+    color: var(--color-accent);
+}
+
+.logo img {
+    width: 3.125rem;
+    height: auto;
+}
+
+.nav ul {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.nav a {
+    color: var(--color-text);
+    text-decoration: none;
+}
+
+.nav a:hover {
+    color: var(--color-text-muted);
+}
+
+.nav a:active {
+    color: var(--color-accent);
+}
