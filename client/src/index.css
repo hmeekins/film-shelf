@@ -22,3 +22,7 @@ body {
   color: var(--color-text);
   font-family: Arial, sans-serif;
 }
+
+p {
+  font-size: 1.2rem;
+}
