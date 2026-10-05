@@ -1,6 +1,7 @@
 import styles from "./Home.module.css"
 import Header from "../../components/Header/Header"
 import About from "../../components/About/About"
+import Shelf from "../../components/Shelf/Shelf"
 function Home()
 {
     return (
@@ -8,8 +9,11 @@ function Home()
             <div className={styles.header}>
                 <Header />
             </div>
-            <div>
+            <div className={styles.content}>
                 <About />
+            </div>
+            <div className={styles.content}>
+                <Shelf />
             </div>
         </div>
     )

@@ -5,6 +5,31 @@
     min-height: 100vh;
 }
 
+.home > * {
+    min-width: 0;
+}
+
 .header {
     grid-column: span 2;
+}
+
+.content {
+    margin-top: 8rem;
+    padding: 0 2rem;
+}
+
+@media (max-width: 700px) {
+    .home {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+    }
+
+    .header {
+        grid-column: 1;
+    }
+
+    .content {
+        margin-top: 1rem;
+        padding-bottom: 0;
+    }
 }
