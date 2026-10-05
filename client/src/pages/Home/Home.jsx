@@ -2,6 +2,7 @@ import styles from "./Home.module.css"
 import Header from "../../components/Header/Header"
 import About from "../../components/About/About"
 import Shelf from "../../components/Shelf/Shelf"
+import Footer from "../../components/Footer/Footer"
 function Home()
 {
     return (
@@ -14,6 +15,9 @@ function Home()
             </div>
             <div className={styles.content}>
                 <Shelf />
+            </div>
+            <div className={styles.footer}>
+                <Footer />
             </div>
         </div>
     )
