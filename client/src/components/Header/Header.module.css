@@ -39,8 +39,21 @@
     color: var(--color-accent);
 }
 
-nav a.active {
+.nav a.active {
     color: var(--color-accent);
     padding-bottom: .4rem;
     border-bottom: 3px solid var(--color-accent);
 }
+
+.signup {
+    display: inline-block;
+    padding: .6rem .8rem;
+    background-color: var(--color-primary);
+    border: 3px solid var(--color-accent);
+    border-radius: 10px;
+}
+
+.nav a.signup:hover {
+    transform: translateY(-2px);
+}
+

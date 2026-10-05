@@ -15,7 +15,7 @@ function Header({ count }) {
                     <li><NavLink to="/" className={({ isActive }) => isActive ? styles.active : ""}>Home</NavLink></li>
                     <li><NavLink to="/movies" className={({ isActive }) => isActive ? styles.active : ""}>My Movies</NavLink></li>
                     <li><NavLink to="/browse" className={({ isActive }) => isActive ? styles.active : ""}>Browse</NavLink></li>
-                    <li><NavLink to="/signup" className={({ isActive }) => isActive ? styles.active : ""}>Sign Up</NavLink></li>
+                    <li><NavLink to="/signup" className={styles.signup}>Sign Up</NavLink></li>
                 </ul>
             </nav>
         </header>
