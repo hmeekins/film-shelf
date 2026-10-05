@@ -36,9 +36,11 @@
 }
 
 .nav a:hover {
-    color: var(--color-text-muted);
+    color: var(--color-accent);
 }
 
-.nav a:active {
+nav a.active {
     color: var(--color-accent);
+    padding-bottom: .4rem;
+    border-bottom: 3px solid var(--color-accent);
 }

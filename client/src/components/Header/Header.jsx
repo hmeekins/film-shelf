@@ -1,5 +1,7 @@
 import styles from "./Header.module.css";
+import { NavLink, Link } from "react-router-dom";
 import popcorn from "../../assets/popcorn.png";
+
 function Header({ count }) {
     return(
         <header className={styles.header}>
@@ -9,10 +11,11 @@ function Header({ count }) {
             </div>
             <nav className={styles.nav}>
                 <ul>
-                    <li><a href="">Watchlist ({count})</a></li>
-                    <li><a href="">Home</a></li>
-                    <li><a href="">My Movies</a></li>
-                    <li><a href="">Browse</a></li>
+                     <li><NavLink to="/watchlist" className={({ isActive }) => isActive ? styles.active : ""}>Watchlist ({count})</NavLink></li>
+                    <li><NavLink to="/" className={({ isActive }) => isActive ? styles.active : ""}>Home</NavLink></li>
+                    <li><NavLink to="/movies" className={({ isActive }) => isActive ? styles.active : ""}>My Movies</NavLink></li>
+                    <li><NavLink to="/browse" className={({ isActive }) => isActive ? styles.active : ""}>Browse</NavLink></li>
+                    <li><NavLink to="/signup" className={({ isActive }) => isActive ? styles.active : ""}>Sign Up</NavLink></li>
                 </ul>
             </nav>
         </header>
