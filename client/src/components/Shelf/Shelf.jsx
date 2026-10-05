@@ -6,7 +6,7 @@ import fightClubPoster from "../../assets/fightClubPoster.png";
 import avengersPoster from "../../assets/avengersEndgamePoster.jpg";
 import odysseyPoster from "../../assets/theOdysseyPoster.jpg";
 
-function Shelf() {
+function Shelf( {movieBehaviour} ) {
     const movies = [
         {
             id: 1,
@@ -34,7 +34,7 @@ function Shelf() {
         <div className={styles.shelf}>
             <div className={styles.movies}>
                 {movies.map((movie) => (
-                    <Movie key={movie.id} imgSrc={movie.posterPath} name={movie.name}/>
+                    <Movie key={movie.id} imgSrc={movie.posterPath} name={movie.name} movieBehaviour={movieBehaviour} />
                 ))}
             </div>
 

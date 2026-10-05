@@ -1,6 +1,6 @@
 import styles from "./Header.module.css";
 import popcorn from "../../assets/popcorn.png";
-function Header() {
+function Header({ count }) {
     return(
         <header className={styles.header}>
             <div className={styles.logo}>
@@ -9,6 +9,7 @@ function Header() {
             </div>
             <nav className={styles.nav}>
                 <ul>
+                    <li><a href="">Watchlist ({count})</a></li>
                     <li><a href="">Home</a></li>
                     <li><a href="">My Movies</a></li>
                     <li><a href="">Browse</a></li>
