@@ -1,3 +1,4 @@
+/*Hayes Meekins*/
 :root {
   --color-background: #1c1c1c;
   --color-surface: #292929;
@@ -5,11 +6,13 @@
   --color-text: #f5f1e8;
   --color-text-muted: #b8b3aa;
 
-  --color-primary: #8b5e3c;
+  --color-primary: #b4692f;
   --color-primary-dark: #5f3d27;
 
   --color-accent: #d4a574;
   --color-border: #454545;
+
+  --color-error: #fc1303
 }
 
 * {

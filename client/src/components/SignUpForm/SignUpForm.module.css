@@ -1,0 +1,82 @@
+/*Hayes Meekins*/
+.signUp {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 40%;
+    background-color: var(--color-surface);
+    border: 3px solid var(--color-border);
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 2px 10px #121212;
+}
+
+.signUp h2 {
+    padding: 0;
+    margin-top: 0;
+    color: var(--color-accent)
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 2.2rem;
+    width: 50%;
+}
+
+.formElement {
+    display: flex;
+    flex-direction: column;
+    gap: .4rem;
+    position: relative;
+}
+
+.formElement input {
+    background-color: var(--color-border);
+    padding: .35rem;
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+}
+
+.formElement input:focus {
+    border: 2px solid var(--color-accent);
+    outline: none;
+}
+
+.formElement p {
+    color: var(--color-text);
+}
+
+.formElement .error {
+    color: var(--color-error);
+    font-size: 12px;
+    margin: 0;
+    position: absolute;
+    top: 105%;
+}
+
+.formElement .requirements {
+    color: var(--color-text-muted);
+    font-size: 10px;
+    margin: 0;
+}
+
+.signUpButton {
+    padding: .4rem .6rem;
+    background-color: var(--color-primary);
+    border: 3px solid var(--color-accent);
+    color: var(--color-text);
+    border-radius: 10px;
+}
+
+.signUpButton:hover {
+    transform: translateY(-2px);
+}
+
+@media (max-width: 700px) {
+    .signUp {
+        width: 70%;
+    }
+}

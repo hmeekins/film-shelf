@@ -1,3 +1,4 @@
+//Hayes Meekins
 import styles from "./Movie.module.css";
 
 function Movie({name, imgSrc, movieBehaviour})
