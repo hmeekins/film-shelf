@@ -4,6 +4,7 @@ require("dotenv").config();
 
 const express = require("express");
 const cors = require("cors");
+const connectDB = require("./models/db");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -18,6 +19,17 @@ app.get("/api/test", (req, res) => {
     res.json({ message: "FilmShelf API is running!" });
 });
 
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+async function startServer() {
+    try {
+        await connectDB();
+
+        app.listen(PORT, () => {
+            console.log(`Server running on port ${PORT}`);
+        });
+    } catch (error) {
+        console.error("Unable to start server:", error.message);
+        process.exit(1);
+    }
+}
+
+startServer();
