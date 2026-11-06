@@ -12,4 +12,23 @@ async function getMovies(req, res, next) {
     }
 }
 
-module.exports = { getMovies };
+async function getMovieById(req, res, next) {
+    try {
+        const movie = await Movie.findById(req.params.id);
+
+        if (!movie) {
+            return res.status(404).json({
+                message: "Movie not found"
+            });
+        }
+
+        res.status(200).json(movie);
+    } catch (error) {
+        next(error);
+    }
+}
+
+module.exports = { 
+    getMovies, 
+    getMovieById 
+};
