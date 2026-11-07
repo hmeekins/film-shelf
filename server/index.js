@@ -17,8 +17,19 @@ app.use(cors({
 
 app.use(express.json());
 
+app.use((req, res, next) => {
+    console.log(`${req.method} ${req.originalUrl}`);
+    next();
+});
+
 app.use("/api/movies", movieRoutes);
 app.use("/api/reviews", reviewRoutes);
+
+app.use("/api", (req, res) => {
+    res.status(404).json({
+        message: "API endpoint not found"
+    });
+});
 
 app.get("/api/test", (req, res) => {
     res.json({ message: "FilmShelf API is running!" });
