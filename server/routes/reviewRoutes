@@ -1,6 +1,14 @@
+// Hayes Meekins
+
 const express = require("express");
 const { body } = require("express-validator");
-const { getReviews, createReview } = require("../controllers/reviewController");
+const { 
+    getReviews, 
+    getReviewById, 
+    createReview, 
+    updateReview, 
+    deleteReview 
+} = require("../controllers/reviewController");
 
 const router = express.Router();
 
@@ -10,7 +18,16 @@ const reviewValidationRules = [
     body("comment").isString().trim().notEmpty().isLength({ max: 1000 })
 ];
 
+const updateReviewValidationRules = [
+    body("rating").isInt({ min: 1, max: 5 }),
+    body("comment").isString().trim().notEmpty().isLength({ max: 1000 })
+]
+
 router.get("/", getReviews);
+router.get("/:id", getReviewById);
 router.post("/", reviewValidationRules, createReview);
+router.put("/:id", updateReviewValidationRules, updateReview);
+router.delete("/:id", deleteReview);
+
 
 module.exports = router;
