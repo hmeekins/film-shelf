@@ -47,8 +47,40 @@ async function createMovie(req, res, next) {
     }
 }
 
+async function updateMovie(req, res, next) {
+    try {
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            return res.status(400).json({
+                errors: errors.array()
+            });
+        }
+
+        const movie = await Movie.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            {
+                runValidators: true,
+                returnDocument: "after"
+            }
+        );
+
+        if (!movie) {
+            return res.status(404).json({
+                message: "Movie not found"
+            });
+        }
+
+        res.status(200).json(movie);
+    } catch (error) {
+        next(error);
+    }
+}
+
 module.exports = { 
     getMovies, 
     getMovieById,
-    createMovie
+    createMovie,
+    updateMovie
 };

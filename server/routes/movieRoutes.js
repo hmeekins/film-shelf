@@ -3,7 +3,7 @@
 const express = require("express");
 const router = express.Router();
 
-const { getMovies, getMovieById } = require("../controllers/movieController");
+const { getMovies, getMovieById, createMovie, updateMovie } = require("../controllers/movieController");
 
 const { body } = require("express-validator");
 
@@ -19,5 +19,6 @@ const validateMovie = [
 router.get("/", getMovies);
 router.get("/:id", getMovieById);
 router.post("/", validateMovie, createMovie);
+router.put("/:id", validateMovie, updateMovie);
 
 module.exports = router;
