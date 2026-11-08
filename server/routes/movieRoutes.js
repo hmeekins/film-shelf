@@ -8,12 +8,7 @@ const { getMovies, getMovieById, createMovie, updateMovie, deleteMovie } = requi
 const { body } = require("express-validator");
 
 const validateMovie = [
-    body("title").isString().trim().notEmpty().isLength({ max: 200 }),
-    body("releaseYear").isInt({ min: 1888 }),
-    body("genre").isString().trim().notEmpty(),
-    body("description").optional().isString(),
-    body("tmdbId").optional().isInt({ min: 1 }),
-    body("posterPath").optional().isString()
+    body("tmdbId").isInt({ min: 1 })
 ];
 
 router.get("/", getMovies);

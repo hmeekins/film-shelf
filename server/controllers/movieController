@@ -1,6 +1,7 @@
 // Hayes Meekins
 
 const Movie = require("../models/Movie");
+const { getTmdbMovie } = require("../services/tmdbService");
 const { validationResult } = require("express-validator");
 
 async function getMovies(req, res, next) {
@@ -39,7 +40,9 @@ async function createMovie(req, res, next) {
             });
         }
 
-        const movie = await Movie.create(req.body);
+        const movieData = await getTmdbMovie(req.body.tmdbId);
+
+        const movie = await Movie.create(movieData);
 
         res.status(201).json(movie);
     } catch (error) {
@@ -49,30 +52,26 @@ async function createMovie(req, res, next) {
 
 async function updateMovie(req, res, next) {
     try {
-        const errors = validationResult(req);
+        const existingMovie = await Movie.findById(req.params.id);
 
-        if (!errors.isEmpty()) {
-            return res.status(400).json({
-                errors: errors.array()
+        if (!existingMovie) {
+            return res.status(404).json({
+                message: "Movie not found"
             });
         }
 
-        const movie = await Movie.findByIdAndUpdate(
+        const movieData = await getTmdbMovie(existingMovie.tmdbId);
+
+        const updatedMovie = await Movie.findByIdAndUpdate(
             req.params.id,
-            req.body,
+            movieData,
             {
                 runValidators: true,
                 returnDocument: "after"
             }
         );
 
-        if (!movie) {
-            return res.status(404).json({
-                message: "Movie not found"
-            });
-        }
-
-        res.status(200).json(movie);
+        res.status(200).json(updatedMovie);
     } catch (error) {
         next(error);
     }

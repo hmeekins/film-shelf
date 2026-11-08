@@ -29,8 +29,8 @@ const movieSchema = new mongoose.Schema({
 
     tmdbId: {
         type: Number,
-        unique: true,
-        sparse: true
+        required: true,
+        unique: true
     },
 
     posterPath: {
