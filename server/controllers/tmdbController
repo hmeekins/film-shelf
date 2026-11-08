@@ -1,4 +1,7 @@
-const { getPopularMovies } = require("../services/tmdbService");
+const { 
+    getPopularMovies,
+    searchMovies
+ } = require("../services/tmdbService");
 
 async function getPopular(req, res, next) {
     try {
@@ -9,4 +12,29 @@ async function getPopular(req, res, next) {
     }
 }
 
-module.exports = { getPopular };
+async function getSearch(req, res, next) {
+    try {
+        const query = req.query.query;
+
+        if (
+            typeof query !== "string" ||
+            !query.trim() ||
+            query.length > 100
+        ) {
+            return res.status(400).json({
+                message: "Search query must be between 1 and 100 characters"
+            });
+        }
+
+        const movies = await searchMovies(query.trim());
+
+        res.status(200).json(movies);
+    } catch (error) {
+        next(error);
+    }
+}
+
+module.exports = { 
+    getPopular,
+    getSearch
+};

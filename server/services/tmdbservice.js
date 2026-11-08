@@ -19,7 +19,7 @@ async function getPopularMovies() {
 
     const data = await response.json();
 
-    return data.results;
+    return data;
 }
 
 async function getTmdbMovie(tmdbId) {
@@ -57,7 +57,30 @@ async function getTmdbMovie(tmdbId) {
     };
 }
 
+async function searchMovies(query) {
+    const response = await fetch(
+        `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(query)}`,
+        {
+            headers: {
+                Authorization: `Bearer ${process.env.TMDB_TOKEN}`,
+                accept: "application/json"
+            }
+        }
+    );
+
+    if (!response.ok) {
+        const error = new Error("Failed to search movies on TMDB");
+        error.status = 502;
+        throw error;
+    }
+
+    const data = await response.json();
+
+    return data;
+}
+
 module.exports = { 
     getPopularMovies,
-    getTmdbMovie
+    getTmdbMovie,
+    searchMovies
 };

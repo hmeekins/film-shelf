@@ -27,7 +27,6 @@ app.use("/api/movies", movieRoutes);
 app.use("/api/reviews", reviewRoutes);
 app.use("/api/tmdb", tmdbRoutes);
 
-
 app.use("/api", (req, res) => {
     res.status(404).json({
         message: "API endpoint not found"
