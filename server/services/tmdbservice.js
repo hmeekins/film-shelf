@@ -28,7 +28,7 @@ async function getTmdbMovie(tmdbId) {
     return {
         title: data.title,
         releaseYear: Number(data.release_date.slice(0, 4)),
-        genre: data.genres?.[0]?.name || "Unknown",
+        genres: data.genres?.map(genre => genre.name) || [],
         description: data.overview || "",
         tmdbId: data.id,
         posterPath: data.poster_path || ""

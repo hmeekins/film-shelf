@@ -16,10 +16,12 @@ const movieSchema = new mongoose.Schema({
         min: 1888
     },
 
-    genre: {
-        type: String,
+    genres: {
+        type: [String],
         required: true,
-        trim: true
+        validate: {
+            validator: genres => genres.length > 0,
+        }
     },
 
     description: {
