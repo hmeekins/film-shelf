@@ -1,5 +1,27 @@
 // Hayes Meekins
 
+async function getPopularMovies() {
+    const response = await fetch(
+        "https://api.themoviedb.org/3/movie/popular",
+        {
+            headers: {
+                Authorization: `Bearer ${process.env.TMDB_TOKEN}`,
+                accept: "application/json"
+            }
+        }
+    );
+
+    if (!response.ok) {
+        const error = new Error("Failed to fetch popular movies from TMDB");
+        error.status = 502;
+        throw error;
+    }
+
+    const data = await response.json();
+
+    return data.results;
+}
+
 async function getTmdbMovie(tmdbId) {
     const response = await fetch(
         `https://api.themoviedb.org/3/movie/${tmdbId}`,
@@ -35,4 +57,7 @@ async function getTmdbMovie(tmdbId) {
     };
 }
 
-module.exports = { getTmdbMovie };
+module.exports = { 
+    getPopularMovies,
+    getTmdbMovie
+};

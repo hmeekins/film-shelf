@@ -7,6 +7,7 @@ const cors = require("cors");
 const connectDB = require("./models/db");
 const movieRoutes = require("./routes/movieRoutes");
 const reviewRoutes = require("./routes/reviewRoutes");
+const tmdbRoutes = require("./routes/tmdbRoutes");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -24,6 +25,8 @@ app.use((req, res, next) => {
 
 app.use("/api/movies", movieRoutes);
 app.use("/api/reviews", reviewRoutes);
+app.use("/api/tmdb", tmdbRoutes);
+
 
 app.use("/api", (req, res) => {
     res.status(404).json({
