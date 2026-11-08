@@ -1,6 +1,7 @@
 //Hayes Meekins
 
 const mongoose = require("mongoose");
+mongoose.set('sanitizeFilter', true);
 
 async function connectDB() {
     try {

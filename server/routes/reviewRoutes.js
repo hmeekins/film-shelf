@@ -15,13 +15,25 @@ const router = express.Router();
 const reviewValidationRules = [
     body("movie").isMongoId(),
     body("rating").isInt({ min: 1, max: 5 }),
-    body("comment").isString().trim().notEmpty().isLength({ max: 1000 })
+    body("comment")
+        .isString()
+        .trim()
+        .notEmpty()
+        .isLength({ max: 1000 })
+        .not()
+        .matches(/[<>]/)
 ];
 
 const updateReviewValidationRules = [
     body("rating").isInt({ min: 1, max: 5 }),
-    body("comment").isString().trim().notEmpty().isLength({ max: 1000 })
-]
+    body("comment")
+        .isString()
+        .trim()
+        .notEmpty()
+        .isLength({ max: 1000 })
+        .not()
+        .matches(/[<>]/)
+];
 
 router.get("/", getReviews);
 router.get("/:id", getReviewById);
