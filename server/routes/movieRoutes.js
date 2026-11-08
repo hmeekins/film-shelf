@@ -14,7 +14,7 @@ const validateMovie = [
 router.get("/", getMovies);
 router.get("/:id", getMovieById);
 router.post("/", validateMovie, createMovie);
-router.put("/:id", validateMovie, updateMovie);
+router.put("/:id", updateMovie);
 router.delete("/:id", deleteMovie);
 
 module.exports = router;

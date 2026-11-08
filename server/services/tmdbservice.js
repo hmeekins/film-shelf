@@ -1,8 +1,8 @@
 // Hayes Meekins
 
-async function getPopularMovies() {
+async function getPopularMovies(page = 1) {
     const response = await fetch(
-        "https://api.themoviedb.org/3/movie/popular",
+        `https://api.themoviedb.org/3/movie/popular?page=${page}`,
         {
             headers: {
                 Authorization: `Bearer ${process.env.TMDB_TOKEN}`,
@@ -57,9 +57,9 @@ async function getTmdbMovie(tmdbId) {
     };
 }
 
-async function searchMovies(query) {
+async function searchMovies(query, page = 1) {
     const response = await fetch(
-        `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(query)}`,
+        `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(query)}&page=${page}`,
         {
             headers: {
                 Authorization: `Bearer ${process.env.TMDB_TOKEN}`,
