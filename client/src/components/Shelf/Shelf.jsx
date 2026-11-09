@@ -1,49 +1,41 @@
-//Hayes Meekins
+// Hayes Meekins
 import styles from "./Shelf.module.css";
-import shelfImage from "../../assets/shelf.png"
+import shelfImage from "../../assets/shelf.png";
 import Movie from "../Movie/Movie";
-import dunePoster from "../../assets/dunePoster.jpg";
-import fightClubPoster from "../../assets/fightClubPoster.png";
-import avengersPoster from "../../assets/avengersEndgamePoster.jpg";
-import odysseyPoster from "../../assets/theOdysseyPoster.jpg";
 
-function Shelf( {movieBehaviour} ) {
-    const movies = [
-        {
-            id: 1,
-            posterPath: dunePoster,
-            name: "Dune",
-        },
-        {
-            id: 2,
-            posterPath: fightClubPoster,
-            name: "Fight Club",
-        },
-        {
-            id: 3,
-            posterPath: avengersPoster,
-            name: "Avengers Endgame",
-        },
-        {
-            id: 4,
-            posterPath: odysseyPoster,
-            name: "The Odyssey"
-        }
-    ]
+function Shelf({ movies = [], movieBehaviour }) {
+    const shelves = [];
+
+    for (let i = 0; i < movies.length; i += 4) {
+        shelves.push(movies.slice(i, i + 4));
+    }
 
     return (
-        <div className={styles.shelf}>
-            <div className={styles.movies}>
-                {movies.map((movie) => (
-                    <Movie key={movie.id} imgSrc={movie.posterPath} name={movie.name} movieBehaviour={movieBehaviour} />
-                ))}
-            </div>
+        <div className={styles.shelves}>
+            {shelves.map((shelfMovies, index) => (
+                <div className={styles.shelf} key={index}>
+                    <div className={styles.movies}>
+                        {shelfMovies.map((movie) => (
+                            <Movie
+                                key={movie._id}
+                                imgSrc={
+                                    movie.posterPath
+                                        ? `https://image.tmdb.org/t/p/w500${movie.posterPath}`
+                                        : ""
+                                }
+                                name={movie.title}
+                                movieBehaviour={() => movieBehaviour(movie)}
+                            />
+                        ))}
+                    </div>
 
-            <img
-                className={styles.shelfImage}
-                src={shelfImage}
-                alt=""
-            />
+                    <img
+                        className={styles.shelfImage}
+                        src={shelfImage}
+                        alt=""
+                    />
+                </div>
+            ))}
         </div>
     );
 }
