@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { API_URL } from "../../config";
+import Search from "../../components/Search/Search";
 import styles from "./Browse.module.css";
 
 function Browse() {
@@ -10,6 +11,12 @@ function Browse() {
     const [totalPages, setTotalPages] = useState(1);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+    const [searchQuery, setSearchQuery] = useState("");
+
+    function handleSearch(query) {
+        setPage(1);
+        setSearchQuery(query);
+    }
 
     useEffect(() => {
         const controller = new AbortController();
@@ -19,10 +26,13 @@ function Browse() {
             setError("");
 
             try {
-                const response = await fetch(
-                    `${API_URL}/api/tmdb/popular?page=${page}`,
-                    { signal: controller.signal }
-                );
+                const endpoint = searchQuery
+                    ? `${API_URL}/api/tmdb/search?query=${encodeURIComponent(searchQuery)}&page=${page}`
+                    : `${API_URL}/api/tmdb/popular?page=${page}`;
+
+                const response = await fetch(endpoint, {
+                    signal: controller.signal
+                });
 
                 if (!response.ok) {
                     throw new Error("Failed to fetch movies");
@@ -46,11 +56,12 @@ function Browse() {
         fetchMovies();
 
         return () => controller.abort();
-    }, [page]);
+    }, [page, searchQuery]);
 
     return (
         <section className={styles.browse}>
             <h1>Browse Movies</h1>
+            <Search onSearch={handleSearch} />
 
             {loading && <p>Loading movies...</p>}
             {error && <p role="alert">{error}</p>}

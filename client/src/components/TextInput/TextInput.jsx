@@ -13,4 +13,4 @@ function TextInput({ id, type = "text", ...props }) {
     );
 }
 
-export default Input;
+export default TextInput;
