@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { API_URL } from "../../config";
 import Search from "../../components/Search/Search";
+import MovieCard from "../../components/MovieCard/MovieCard";
 import styles from "./Browse.module.css";
 
 function Browse() {
@@ -70,21 +71,7 @@ function Browse() {
                 <>
                     <div className={styles.grid}>
                         {movies.map((movie) => (
-                            <div key={movie.id} className={styles.movie}>
-                                {movie.poster_path ? (
-                                    <img
-                                        src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                                        alt={movie.title}
-                                        loading="lazy"
-                                    />
-                                ) : (
-                                    <div className={styles.placeholder}>
-                                        No Poster
-                                    </div>
-                                )}
-
-                                <h3>{movie.title}</h3>
-                            </div>
+                             <MovieCard key={movie.id} movie={movie} />
                         ))}
                     </div>
 
