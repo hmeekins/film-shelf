@@ -13,6 +13,29 @@
     transform: translateY(-8px);
 }
 
+.movie:hover::before {
+    opacity: 0;
+}
+
+.movie::before {
+    content: "";
+    position: absolute;
+
+    bottom: -2px;
+    left: -3%;
+
+    width: 112%;
+    height: clamp(4px, 0.8vw, 10px);
+
+    background: rgba(0, 0, 0, 0.85);
+
+    border-radius: 2px;
+    filter: blur(clamp(2px, 0.3vw, 4px));
+
+    z-index: -1;
+    pointer-events: none;
+}
+
 .movie::after {
     content: "";
     position: absolute;

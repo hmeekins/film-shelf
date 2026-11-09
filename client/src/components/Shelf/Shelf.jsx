@@ -1,6 +1,5 @@
 // Hayes Meekins
 import styles from "./Shelf.module.css";
-import shelfImage from "../../assets/shelf.png";
 import Movie from "../Movie/Movie";
 
 function Shelf({ movies = [], movieBehaviour }) {
@@ -29,11 +28,10 @@ function Shelf({ movies = [], movieBehaviour }) {
                         ))}
                     </div>
 
-                    <img
-                        className={styles.shelfImage}
-                        src={shelfImage}
-                        alt=""
-                    />
+                    <div className={styles.shelfPlatform} aria-hidden="true">
+                        <div className={styles.shelfTop} />
+                        <div className={styles.shelfFront} />
+                    </div>
                 </div>
             ))}
         </div>
