@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { API_URL } from "../../config";
 import { useNavigate } from "react-router-dom";
 import Shelf from "../../components/Shelf/Shelf";
+import styles from "./MyMovies.module.css";
 
 function MyMovies() {
     const [movies, setMovies] = useState([]);
@@ -49,9 +50,12 @@ function MyMovies() {
     }
 
     return (
-        <main>
-            <Shelf movies={movies} movieBehaviour={handleMovieClick} />
-        </main>
+        <div className={styles.myMovies}>
+            <Shelf
+                movies={movies}
+                movieBehaviour={handleMovieClick}
+            />
+        </div>
     );
 }
 

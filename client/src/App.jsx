@@ -1,16 +1,20 @@
-//Hayes Meekins
+// Hayes Meekins
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import Layout from "./components/Layout/Layout";
 import Home from "./pages/Home/Home";
-import SignUp from "./pages/SignUp/SignUp"
-import MyMovies from "./pages/MyMovies/MyMovies"
+import MyMovies from "./pages/MyMovies/MyMovies";
+import SignUp from "./pages/SignUp/SignUp";
 
 function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/signup" element={<SignUp />} />
-                <Route path="/movies" element={<MyMovies />} />
+                <Route element={<Layout />}>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/movies" element={<MyMovies />} />
+                    <Route path="/signup" element={<SignUp />} />
+                </Route>
             </Routes>
         </BrowserRouter>
     );

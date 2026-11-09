@@ -6,8 +6,8 @@ import Movie from "../Movie/Movie";
 function Shelf({ movies = [], movieBehaviour }) {
     const shelves = [];
 
-    for (let i = 0; i < movies.length; i += 4) {
-        shelves.push(movies.slice(i, i + 4));
+    for (let i = 0; i < movies.length; i += 5) {
+        shelves.push(movies.slice(i, i + 5));
     }
 
     return (
