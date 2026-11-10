@@ -6,50 +6,44 @@ import { API_URL } from "../../config";
 import styles from "./MovieDetails.module.css";
 
 function MovieDetails() {
-    const { id, tmdbId } = useParams();
+    const { tmdbId } = useParams();
 
     const [movie, setMovie] = useState(null);
+    const [reviewData, setReviewData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
 
     useEffect(() => {
-        const controller = new AbortController();
-
         async function fetchMovie() {
             setLoading(true);
             setError("");
-            setMovie(null);
-
-            const endpoint = tmdbId
-                ? `${API_URL}/api/tmdb/movie/${tmdbId}`
-                : `${API_URL}/api/movies/${id}`;
 
             try {
-                const response = await fetch(endpoint, {
-                    signal: controller.signal
-                });
+                const [movieResponse, reviewResponse] = await Promise.all([
+                    fetch(`${API_URL}/api/tmdb/movie/${tmdbId}`),
+                    fetch(`${API_URL}/api/reviews/tmdb/${tmdbId}`)
+                ]);
 
-                if (!response.ok) {
+                if (!movieResponse.ok || !reviewResponse.ok) {
                     throw new Error("Failed to load movie details");
                 }
 
-                const data = await response.json();
-                setMovie(data);
+                const [movieData, reviews] = await Promise.all([
+                    movieResponse.json(),
+                    reviewResponse.json()
+                ]);
+
+                setMovie(movieData);
+                setReviewData(reviews);
             } catch (error) {
-                if (error.name !== "AbortError") {
-                    setError(error.message);
-                }
+                setError(error.message);
             } finally {
-                if (!controller.signal.aborted) {
-                    setLoading(false);
-                }
+                setLoading(false);
             }
         }
 
         fetchMovie();
-
-        return () => controller.abort();
-    }, [id, tmdbId]);
+    }, [tmdbId]);
 
     if (loading) {
         return <p className={styles.message}>Loading movie...</p>;
@@ -115,7 +109,43 @@ function MovieDetails() {
                                 "No description available."}
                         </p>
                     </div>
+
+                    <div className={styles.rating}>
+                        <h2>FilmShelf Rating</h2>
+
+                        {reviewData?.averageRating != null ? (
+                            <p>
+                                ★ {reviewData.averageRating.toFixed(1)} / 5
+                                {" "}({reviewData.reviewAmount} reviews)
+                            </p>
+                        ) : (
+                            <p>Not yet rated</p>
+                        )}
+                    </div>
                 </div>
+            </div>
+
+            <div className={styles.reviews}>
+                <h2>User Reviews</h2>
+
+                {reviewData?.reviews.length > 0 ? (
+                    reviewData.reviews.map((review) => (
+                        <div key={review._id} className={styles.review}>
+                            <p className={styles.reviewRating}>
+                                {"★".repeat(review.rating)}
+                                {"☆".repeat(5 - review.rating)}
+                            </p>
+
+                            <p>{review.comment}</p>
+
+                            <span className={styles.reviewDate}>
+                                {new Date(review.createdAt).toLocaleDateString()}
+                            </span>
+                        </div>
+                    ))
+                ) : (
+                    <p>No reviews yet. Be the first to review!</p>
+                )}
             </div>
         </section>
     );
