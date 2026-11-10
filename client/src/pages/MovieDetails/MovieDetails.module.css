@@ -1,0 +1,95 @@
+/* Hayes Meekins */
+
+.details {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.movie {
+    display: grid;
+    grid-template-columns: minmax(200px, 300px) 1fr;
+    gap: 3rem;
+    align-items: start;
+}
+
+.poster {
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    overflow: hidden;
+    border-radius: 8px;
+    background-color: var(--color-border);
+}
+
+.poster img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.placeholder {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    color: var(--color-text-muted);
+}
+
+.info h1 {
+    margin: 0 0 1rem;
+    font-size: clamp(2rem, 4vw, 3rem);
+    color: var(--color-text);
+}
+
+.metadata {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    color: var(--color-text-muted);
+}
+
+.info strong {
+    color: var(--color-accent);
+}
+
+.cast,
+.overview {
+    margin-top: 2rem;
+}
+
+.cast h2,
+.overview h2 {
+    margin-bottom: 0.75rem;
+    font-size: 1.3rem;
+    color: var(--color-accent);
+}
+
+.cast p,
+.overview p {
+    line-height: 1.7;
+    color: var(--color-text);
+}
+
+.message {
+    padding: 3rem 2rem;
+    text-align: center;
+    color: var(--color-text-muted);
+}
+
+@media (max-width: 700px) {
+    .details {
+        padding: 1.5rem;
+    }
+
+    .movie {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .poster {
+        max-width: 300px;
+        margin: 0 auto;
+    }
+}
