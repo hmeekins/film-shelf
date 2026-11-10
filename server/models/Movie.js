@@ -1,59 +1,25 @@
-
- // Hayes Meekins
+// Hayes Meekins
 
 const mongoose = require("mongoose");
 
 const movieSchema = new mongoose.Schema({
-    title: {
-        type: String,
-        required: true,
-        trim: true,
-        maxlength: 200
-    },
-
-    releaseYear: {
-        type: Number,
-        required: true,
-        min: 1888
-    },
-
-    genres: {
-        type: [String],
-        required: true,
-        validate: {
-            validator: genres => genres.length > 0
-        }
-    },
-
-    description: {
-        type: String,
-        default: ""
-    },
-
     tmdbId: {
         type: Number,
         required: true,
-        unique: true
+        unique: true,
+        min: 1
     },
 
-    posterPath: {
-        type: String,
-        default: ""
-    },
-
-    runtime: {
+    reviewSum: {
         type: Number,
+        default: 0,
         min: 0
     },
 
-    director: {
-        type: String,
-        trim: true
-    },
-
-    cast: {
-        type: [String],
-        default: []
+    reviewAmount: {
+        type: Number,
+        default: 0,
+        min: 0
     }
 }, { timestamps: true });
 

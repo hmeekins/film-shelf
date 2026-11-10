@@ -4,7 +4,8 @@ const express = require("express");
 const { body } = require("express-validator");
 const { 
     getReviews, 
-    getReviewById, 
+    getReviewById,
+    getReviewData, 
     createReview, 
     updateReview, 
     deleteReview 
@@ -37,9 +38,9 @@ const updateReviewValidationRules = [
 
 router.get("/", getReviews);
 router.get("/:id", getReviewById);
+router.get("/tmdb/:tmdbId", getReviewData);
 router.post("/", reviewValidationRules, createReview);
 router.put("/:id", updateReviewValidationRules, updateReview);
 router.delete("/:id", deleteReview);
-
 
 module.exports = router;
