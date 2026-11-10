@@ -1,4 +1,5 @@
-// Hayes Meekins
+
+ // Hayes Meekins
 
 const mongoose = require("mongoose");
 
@@ -20,7 +21,7 @@ const movieSchema = new mongoose.Schema({
         type: [String],
         required: true,
         validate: {
-            validator: genres => genres.length > 0,
+            validator: genres => genres.length > 0
         }
     },
 
@@ -38,6 +39,21 @@ const movieSchema = new mongoose.Schema({
     posterPath: {
         type: String,
         default: ""
+    },
+
+    runtime: {
+        type: Number,
+        min: 0
+    },
+
+    director: {
+        type: String,
+        trim: true
+    },
+
+    cast: {
+        type: [String],
+        default: []
     }
 }, { timestamps: true });
 

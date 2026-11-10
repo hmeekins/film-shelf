@@ -1,12 +1,18 @@
 // Hayes Meekins
 
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "./MovieCard.module.css";
 
 function MovieCard({ movie }) {
     const [inWatchlist, setInWatchlist] = useState(false);
+    const navigate = useNavigate();
 
-    function handleWatchlist() {
+    const handleDetails = () => {
+        navigate(`/movies/tmdb/${movie.id}`);
+    };
+
+    const handleWatchlist = () => {
         setInWatchlist(prev => !prev);
     }
 
@@ -26,7 +32,7 @@ function MovieCard({ movie }) {
                 )}
 
                 <div className={styles.overlay}>
-                    <button type="button" disabled>
+                    <button type="button" onClick={handleDetails}>
                         Details
                     </button>
 

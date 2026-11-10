@@ -6,6 +6,7 @@ import Home from "./pages/Home/Home";
 import MyMovies from "./pages/MyMovies/MyMovies";
 import SignUp from "./pages/SignUp/SignUp";
 import Browse from "./pages/Browse/Browse";
+import MovieDetails from "./pages/MovieDetails/MovieDetails";
 
 function App() {
     return (
@@ -16,6 +17,7 @@ function App() {
                     <Route path="/movies" element={<MyMovies />} />
                     <Route path="/signup" element={<SignUp />} />
                     <Route path="/browse" element={<Browse />} />
+                    <Route path="/movies/tmdb/:tmdbId" element={<MovieDetails />} />
                 </Route>
             </Routes>
         </BrowserRouter>
