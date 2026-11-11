@@ -3,9 +3,9 @@
 import { useState } from "react";
 import styles from "./ReviewForm.module.css";
 
-function ReviewForm({ movieTitle, onClose, onSubmit, submitting, error }) {
-    const [rating, setRating] = useState(0);
-    const [comment, setComment] = useState("");
+function ReviewForm({movieTitle, review = null, onClose, onSubmit, submitting, error}) {
+    const [rating, setRating] = useState(review?.rating ?? 0);
+    const [comment, setComment] = useState(review?.comment ?? "");
 
     async function handleSubmit(event) {
         event.preventDefault();
@@ -24,7 +24,9 @@ function ReviewForm({ movieTitle, onClose, onSubmit, submitting, error }) {
             >
                 <div className={styles.header}>
                     <div>
-                        <h2 id="review-panel-title">Write a Review</h2>
+                        <h2 id="review-panel-title">
+                            {review ? "Edit Review" : "Write a Review"}
+                        </h2>
                         <p>{movieTitle}</p>
                     </div>
 
@@ -96,7 +98,7 @@ function ReviewForm({ movieTitle, onClose, onSubmit, submitting, error }) {
                                 !comment.trim()
                             }
                         >
-                            {submitting ? "Submitting..." : "Submit Review"}
+                            {submitting ? "Saving..." : review ? "Save Changes" : "Submit Review"}
                         </button>
                     </div>
                 </form>
