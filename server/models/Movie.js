@@ -3,41 +3,28 @@
 const mongoose = require("mongoose");
 
 const movieSchema = new mongoose.Schema({
-    title: {
-        type: String,
-        required: true,
-        trim: true,
-        maxlength: 200
-    },
-
-    releaseYear: {
-        type: Number,
-        required: true,
-        min: 1888
-    },
-
-    genres: {
-        type: [String],
-        required: true,
-        validate: {
-            validator: genres => genres.length > 0,
-        }
-    },
-
-    description: {
-        type: String,
-        default: ""
-    },
-
     tmdbId: {
         type: Number,
         required: true,
         unique: true
     },
-
+    title: {
+        type: String,
+        required: true
+    },
     posterPath: {
         type: String,
-        default: ""
+        default: null
+    },
+    reviewSum: {
+        type: Number,
+        default: 0,
+        min: 0
+    },
+    reviewAmount: {
+        type: Number,
+        default: 0,
+        min: 0
     }
 }, { timestamps: true });
 

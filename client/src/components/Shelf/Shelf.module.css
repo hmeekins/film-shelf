@@ -1,27 +1,90 @@
-/*Hayes Meekins*/
-.shelf {
-    width: 100%;
-    max-width: 1100px;
-    position: relative;
-}
+/* Hayes Meekins */
 
 .movies {
-    width: 100%;
     display: flex;
     align-items: flex-end;
-    justify-content: center;
-    
-    gap: clamp(0.8rem, 3vw, 3rem);
+    justify-content: space-evenly;
+
+    width: 100%;
+    padding: 0 4%;
+    box-sizing: border-box;
 
     position: relative;
     z-index: 2;
+
+    transform: translateY(calc(var(--shelf-height) * 0.105));
 }
 
-.shelfImage {
-    display: block;
-    width: 100%;
-    position: relative;
-    z-index: 1;
+.shelf {
+    --shelf-color: #454545;
+    --shelf-accent: #bb8255;
+    --shelf-height: clamp(22px, 4vw, 56px);
 
-    margin-top: -13%;
+    width: 100%;
+    max-width: 1100px;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.shelfPlatform {
+    position: relative;
+    width: 100%;
+    height: var(--shelf-height);
+}
+
+.shelfTop {
+    position: absolute;
+    inset: 0 0 auto;
+    height: 20%;
+
+    background: color-mix(
+        in srgb,
+        var(--shelf-color),
+        white 22%
+    );
+
+    clip-path: polygon(
+        6% 0,
+        94% 0,
+        100% 100%,
+        0 100%
+    );
+}
+
+.shelfFront {
+    position: absolute;
+    inset: 20% 0 0;
+
+    background: linear-gradient(
+        to bottom,
+        var(--shelf-color),
+        color-mix(
+            in srgb,
+            var(--shelf-color),
+            black 45%
+        )
+    );
+
+    clip-path: polygon(
+        0 0,
+        100% 0,
+        96% 100%,
+        4% 100%
+    );
+
+    border-bottom: 2px solid var(--shelf-accent);
+}
+
+.shelves {
+    --shelf-gap: clamp(32px, 5vw, 64px);
+    --shelf-padding: clamp(16px, 3vw, 40px);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 100%;
+    gap: var(--shelf-gap);
+    padding-block: var(--shelf-padding);
+    box-sizing: border-box;
 }

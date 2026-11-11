@@ -1,0 +1,15 @@
+/* Hayes Meekins */
+
+.input {
+    background-color: var(--color-border);
+    padding: .35rem;
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    font: inherit;
+}
+
+.input:focus {
+    border: 2px solid var(--color-accent);
+    outline: none;
+}

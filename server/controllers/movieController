@@ -1,13 +1,13 @@
 // Hayes Meekins
 
 const Movie = require("../models/Movie");
+const Review = require("../models/Review");
 const { getTmdbMovie } = require("../services/tmdbService");
 const { validationResult } = require("express-validator");
 
 async function getMovies(req, res, next) {
     try {
         const movies = await Movie.find();
-
         res.status(200).json(movies);
     } catch (error) {
         next(error);
@@ -19,9 +19,7 @@ async function getMovieById(req, res, next) {
         const movie = await Movie.findById(req.params.id);
 
         if (!movie) {
-            return res.status(404).json({
-                message: "Movie not found"
-            });
+            return res.status(404).json({ message: "Movie not found" });
         }
 
         res.status(200).json(movie);
@@ -35,43 +33,23 @@ async function createMovie(req, res, next) {
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
-            return res.status(400).json({
-                errors: errors.array()
-            });
+            return res.status(400).json({ errors: errors.array() });
         }
 
-        const movieData = await getTmdbMovie(req.body.tmdbId);
+        const tmdbId = Number(req.body.tmdbId);
+        const tmdbMovie = await getTmdbMovie(tmdbId);
 
-        const movie = await Movie.create(movieData);
-
-        res.status(201).json(movie);
-    } catch (error) {
-        next(error);
-    }
-}
-
-async function updateMovie(req, res, next) {
-    try {
-        const existingMovie = await Movie.findById(req.params.id);
-
-        if (!existingMovie) {
-            return res.status(404).json({
-                message: "Movie not found"
-            });
-        }
-
-        const movieData = await getTmdbMovie(existingMovie.tmdbId);
-
-        const updatedMovie = await Movie.findByIdAndUpdate(
-            req.params.id,
-            movieData,
-            {
-                runValidators: true,
-                returnDocument: "after"
-            }
+        const movie = await Movie.findOneAndUpdate(
+            { tmdbId },
+            { $setOnInsert: { 
+                tmdbId,
+                title: tmdbMovie.title,
+                posterPath: tmdbMovie.posterPath,
+            }},
+            { upsert: true, new: true, runValidators: true }
         );
 
-        res.status(200).json(updatedMovie);
+        res.status(200).json(movie);
     } catch (error) {
         next(error);
     }
@@ -79,28 +57,24 @@ async function updateMovie(req, res, next) {
 
 async function deleteMovie(req, res, next) {
     try {
-        const movie = await Movie.findByIdAndDelete(req.params.id);
+        const movie = await Movie.findById(req.params.id);
 
         if (!movie) {
-            return res.status(404).json({
-                message: "Movie not found"
-            });
+            return res.status(404).json({ message: "Movie not found" });
         }
 
         await Review.deleteMany({ movie: movie._id });
+        await Movie.findByIdAndDelete(movie._id);
 
-        res.status(200).json({
-            message: "Movie deleted successfully"
-        });
+        res.status(200).json({ message: "Movie deleted successfully" });
     } catch (error) {
         next(error);
     }
 }
 
-module.exports = { 
-    getMovies, 
+module.exports = {
+    getMovies,
     getMovieById,
     createMovie,
-    updateMovie,
     deleteMovie
 };

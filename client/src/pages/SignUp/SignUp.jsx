@@ -4,10 +4,10 @@ import SignUpForm from "../../components/SignUpForm/SignUpForm"
 
 function SignUp() {
     return (
-        <main className={styles.form}>
+        <div className={styles.form}>
             <SignUpForm />
-        </main>
-    )
+        </div>
+    );
 }
 
 export default SignUp

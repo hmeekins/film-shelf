@@ -22,9 +22,10 @@ async function getPopularMovies(page = 1) {
     return data;
 }
 
+
 async function getTmdbMovie(tmdbId) {
     const response = await fetch(
-        `https://api.themoviedb.org/3/movie/${tmdbId}`,
+        `https://api.themoviedb.org/3/movie/${tmdbId}?append_to_response=credits`,
         {
             headers: {
                 Authorization: `Bearer ${process.env.TMDB_TOKEN}`,
@@ -47,13 +48,24 @@ async function getTmdbMovie(tmdbId) {
         throw error;
     }
 
+    const director = data.credits?.crew?.find(
+        person => person.job === "Director"
+    )?.name || "";
+
+    const cast = data.credits?.cast
+        ?.slice(0, 10)
+        .map(person => person.name) || [];
+
     return {
         title: data.title,
         releaseYear: Number(data.release_date.slice(0, 4)),
         genres: data.genres?.map(genre => genre.name) || [],
         description: data.overview || "",
         tmdbId: data.id,
-        posterPath: data.poster_path || ""
+        posterPath: data.poster_path || "",
+        runtime: data.runtime ?? null,
+        director,
+        cast
     };
 }
 
