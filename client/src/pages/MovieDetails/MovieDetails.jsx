@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { API_URL } from "../../config";
+import ReviewForm from "../../components/ReviewForm/ReviewForm";
 import styles from "./MovieDetails.module.css";
 
 function MovieDetails() {
@@ -12,6 +13,9 @@ function MovieDetails() {
     const [reviewData, setReviewData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+    const [showReviewForm, setShowReviewForm] = useState(false);
+    const [submitting, setSubmitting] = useState(false);
+    const [reviewError, setReviewError] = useState("");
 
     useEffect(() => {
         async function fetchMovie() {
@@ -44,6 +48,68 @@ function MovieDetails() {
 
         fetchMovie();
     }, [tmdbId]);
+
+    async function handleReviewSubmit({ rating, comment }) {
+        setSubmitting(true);
+        setReviewError("");
+
+        try {
+            let movieId = reviewData?.movieId;
+
+            if (!movieId) {
+                const movieResponse = await fetch(`${API_URL}/api/movies`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                    tmdbId: Number(tmdbId)
+                    })
+                });
+
+                if (!movieResponse.ok) {
+                    throw new Error("Failed to save movie");
+                }
+
+                const savedMovie = await movieResponse.json();
+                movieId = savedMovie._id;
+            }
+
+            const response = await fetch(`${API_URL}/api/reviews`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    movie: movieId,
+                    rating,
+                    comment
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to submit review");
+            }
+
+            const reviewResponse = await fetch(
+                `${API_URL}/api/reviews/tmdb/${tmdbId}`
+            );
+
+            if (!reviewResponse.ok) {
+                throw new Error("Review submitted, but failed to refresh reviews");
+            }
+
+            const updatedReviews = await reviewResponse.json();
+
+            setReviewData(updatedReviews);
+            setShowReviewForm(false);
+
+        } catch (error) {
+            setReviewError(error.message);
+        } finally {
+            setSubmitting(false);
+        }
+    }
 
     if (loading) {
         return <p className={styles.message}>Loading movie...</p>;
@@ -122,6 +188,21 @@ function MovieDetails() {
                             <p>Not yet rated</p>
                         )}
                     </div>
+                    <button
+                        type="button"
+                        onClick={() => setShowReviewForm(true)}
+                    >
+                        Write a Review
+                    </button>
+                    {showReviewForm && (
+                        <ReviewForm
+                            movieTitle={movie.title}
+                            onClose={() => setShowReviewForm(false)}
+                            onSubmit={handleReviewSubmit}
+                            submitting={submitting}
+                            error={reviewError}
+                        />
+                    )}
                 </div>
             </div>
 

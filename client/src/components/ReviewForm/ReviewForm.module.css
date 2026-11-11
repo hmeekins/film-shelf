@@ -1,0 +1,134 @@
+/* Hayes Meekins */
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.75);
+}
+
+.panel {
+    width: 100%;
+    max-width: 500px;
+    padding: 2rem;
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    background: var(--color-background);
+    color: var(--color-text);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+.header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+}
+
+.header h2 {
+    margin: 0 0 0.5rem;
+    color: var(--color-text);
+}
+
+.header p {
+    margin: 0;
+    color: var(--color-text-muted);
+}
+
+.close {
+    border: none;
+    background: none;
+    color: var(--color-text-muted);
+    font-size: 1.75rem;
+    cursor: pointer;
+}
+
+.panel label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.stars {
+    display: flex;
+    gap: 0.25rem;
+    margin-bottom: 1.5rem;
+}
+
+.star,
+.selectedStar {
+    padding: 0;
+    border: none;
+    background: none;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.star {
+    color: var(--color-border);
+}
+
+.selectedStar {
+    color: var(--color-accent);
+}
+
+.panel textarea {
+    display: block;
+    width: 100%;
+    min-height: 120px;
+    padding: 0.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    background: var(--color-background);
+    color: var(--color-text);
+    font: inherit;
+    resize: vertical;
+}
+
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+}
+
+.cancel,
+.submit {
+    padding: 0.75rem 1.25rem;
+    border: none;
+    border-radius: 6px;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.cancel {
+    background: var(--color-border);
+    color: var(--color-text);
+}
+
+.submit {
+    background: var(--color-accent);
+    color: var(--color-background);
+}
+
+.submit:disabled,
+.cancel:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.error {
+    margin-top: 0.75rem;
+    color: #ef7777;
+}
+
+@media (max-width: 600px) {
+    .panel {
+        padding: 1.5rem;
+    }
+}
