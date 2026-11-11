@@ -49,67 +49,31 @@ function MovieDetails() {
         fetchMovie();
     }, [tmdbId]);
 
-    async function handleReviewSubmit({ rating, comment }) {
+   async function handleReviewSubmit({ rating, comment }) {
         setSubmitting(true);
         setReviewError("");
 
         try {
-            let movieId = reviewData?.movieId;
+            await submitReview(tmdbId, rating, comment);
 
-            if (!movieId) {
-                const movieResponse = await fetch(`${API_URL}/api/movies`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                    tmdbId: Number(tmdbId)
-                    })
-                });
-
-                if (!movieResponse.ok) {
-                    throw new Error("Failed to save movie");
-                }
-
-                const savedMovie = await movieResponse.json();
-                movieId = savedMovie._id;
-            }
-
-            const response = await fetch(`${API_URL}/api/reviews`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    movie: movieId,
-                    rating,
-                    comment
-                })
-            });
-
-            if (!response.ok) {
-                throw new Error("Failed to submit review");
-            }
-
-            const reviewResponse = await fetch(
+            const response = await fetch(
                 `${API_URL}/api/reviews/tmdb/${tmdbId}`
             );
 
-            if (!reviewResponse.ok) {
+            if (!response.ok) {
                 throw new Error("Review submitted, but failed to refresh reviews");
             }
 
-            const updatedReviews = await reviewResponse.json();
+            const updatedReviews = await response.json();
 
             setReviewData(updatedReviews);
-            setShowReviewForm(false);
-
+            setShowReviewPanel(false);
         } catch (error) {
             setReviewError(error.message);
         } finally {
             setSubmitting(false);
         }
-    }
+    }   
 
     if (loading) {
         return <p className={styles.message}>Loading movie...</p>;
