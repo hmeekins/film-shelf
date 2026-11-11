@@ -127,7 +127,7 @@
     color: #ef7777;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 900px) {
     .panel {
         padding: 1.5rem;
     }

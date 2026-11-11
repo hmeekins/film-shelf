@@ -13,8 +13,34 @@
     color: var(--color-accent);
 }
 
+.attribution {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
 
-@media (max-width: 700px) {
+.tmdbLogo {
+    width: 100px;
+    height: auto;
+    flex-shrink: 0;
+}
+
+.attribution p {
+    margin: 0;
+}
+
+.about a {
+    color: var(--color-accent);
+    text-decoration: none;
+}
+
+.about a:hover {
+    text-decoration: underline;
+}
+
+
+@media (max-width: 900px) {
     .about {
         text-align: center;
     }

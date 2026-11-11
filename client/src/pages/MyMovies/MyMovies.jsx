@@ -13,7 +13,7 @@ function MyMovies() {
     const navigate = useNavigate();
 
     function handleMovieClick(movie) {
-        navigate(`/movies/${movie._id}`);
+        navigate(`/movies/tmdb/${movie.tmdbId}`);
     }
 
     useEffect(() => {
@@ -51,6 +51,7 @@ function MyMovies() {
 
     return (
         <div className={styles.myMovies}>
+            <h1 className={styles.heading}>My Collection</h1>
             <Shelf
                 movies={movies}
                 movieBehaviour={handleMovieClick}
