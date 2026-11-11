@@ -37,11 +37,15 @@ async function createMovie(req, res, next) {
         }
 
         const tmdbId = Number(req.body.tmdbId);
-        await getTmdbMovie(tmdbId);
+        const tmdbMovie = await getTmdbMovie(tmdbId);
 
         const movie = await Movie.findOneAndUpdate(
             { tmdbId },
-            { $setOnInsert: { tmdbId } },
+            { $setOnInsert: { 
+                tmdbId,
+                title: tmdbMovie.title,
+                posterPath: tmdbMovie.posterPath,
+            }},
             { upsert: true, new: true, runValidators: true }
         );
 
