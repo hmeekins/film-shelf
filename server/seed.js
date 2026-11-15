@@ -53,21 +53,6 @@ async function seedDatabase() {
                 movie: insertedMovies[1]._id,
                 rating: 5,
                 comment: "An incredible superhero crossover with an amazing villain."
-            },
-            {
-                movie: insertedMovies[2]._id,
-                rating: 5,
-                comment: "Beautiful cinematography and an incredible soundtrack."
-            },
-            {
-                movie: insertedMovies[3]._id,
-                rating: 4,
-                comment: "A thought-provoking science fiction movie."
-            },
-            {
-                movie: insertedMovies[4]._id,
-                rating: 5,
-                comment: "A classic with memorable characters and an emotional story."
             }
         ];
 

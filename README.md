@@ -36,5 +36,5 @@ TMDB Routes
 - GET "/popular" Retrieves all movies sorted by popularity (paginated so defaults to page 1 but will except a page paramter which helps with navigating through movies)
 - GET "/search" Retrieves movies matching a search query (also paginated)
 
-
+I plan on using file uploads as my advanced feature. I will use them to allow users to upload profile pictures.
 
