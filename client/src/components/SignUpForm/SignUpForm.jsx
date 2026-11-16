@@ -3,6 +3,7 @@
 
 import { useState } from "react";
 import TextInput from "../TextInput/TextInput";
+import Button from "../Button/Button";
 import styles from "./SignUpForm.module.css";
 
 function SignUpForm() {
@@ -137,12 +138,11 @@ function SignUpForm() {
                     )}
                 </div>
 
-                <button
+                <Button
                     type="submit"
-                    className={styles.signUpButton}
                 >
                     Sign Up
-                </button>
+                </Button>
             </form>
         </div>
     );

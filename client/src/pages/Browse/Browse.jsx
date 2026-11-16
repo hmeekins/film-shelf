@@ -5,6 +5,7 @@ import { API_URL } from "../../config";
 import Search from "../../components/Search/Search";
 import MovieCard from "../../components/MovieCard/MovieCard";
 import styles from "./Browse.module.css";
+import Button from "../../components/Button/Button";
 
 function Browse() {
     const [movies, setMovies] = useState([]);
@@ -76,23 +77,23 @@ function Browse() {
                     </div>
 
                     <div className={styles.pagination}>
-                        <button
+                        <Button
                             disabled={page === 1}
                             onClick={() => setPage(prev => prev - 1)}
                         >
                             Previous
-                        </button>
+                        </Button>
 
                         <span>
                             Page {page} of {totalPages}
                         </span>
 
-                        <button
+                        <Button 
                             disabled={page >= totalPages}
                             onClick={() => setPage(prev => prev + 1)}
                         >
                             Next
-                        </button>
+                        </Button>
                     </div>
                 </>
             )}

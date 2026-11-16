@@ -50,18 +50,6 @@
     margin: 0;
 }
 
-.signUpButton {
-    padding: .4rem .6rem;
-    background-color: var(--color-primary);
-    border: 3px solid var(--color-accent);
-    color: var(--color-text);
-    border-radius: 10px;
-}
-
-.signUpButton:hover {
-    transform: translateY(-2px);
-}
-
 @media (max-width: 900px) {
     .signUp {
         width: 90%;

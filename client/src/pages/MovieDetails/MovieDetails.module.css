@@ -96,19 +96,6 @@
     margin-top: 1.5rem;
 }
 
-.reviewActions button {
-    padding: 0.5rem 1rem;
-    border: 1px solid var(--color-border);
-    border-radius: 6px;
-    background: transparent;
-    color: var(--color-text);
-    cursor: pointer;
-}
-
-.reviewActions button:hover {
-    border-color: var(--color-accent);
-}
-
 @media (max-width: 900px) {
     .details {
         padding: 1.5rem;

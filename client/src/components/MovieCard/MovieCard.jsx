@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { submitReview } from "../../services/reviewService";
 import ReviewPanel from "../ReviewForm/ReviewForm";
+import Button from "../Button/Button";
 import styles from "./MovieCard.module.css";
 
 function MovieCard({ movie }) {
@@ -48,29 +49,25 @@ function MovieCard({ movie }) {
                 )}
 
                 <div className={styles.overlay}>
-                    <button type="button" onClick={() => navigate(`/movies/tmdb/${movie.id}`)}>
+                    <Button onClick={() => navigate(`/movies/tmdb/${movie.id}`)}>
                         Details
-                    </button>
+                    </Button>
 
-                    <button
-                        type="button"
-                        onClick={() => {
-                            setReviewError("");
-                            setShowReviewPanel(true);
-                        }}
-                    >
+                    <Button onClick={() => {
+                        setReviewError("");
+                        setShowReviewPanel(true);
+                    }}>
                         Review
-                    </button>
+                    </Button>
 
-                    <button
-                        type="button"
+                    <Button
                         onClick={handleWatchlist}
                         aria-pressed={inWatchlist}
                     >
                         {inWatchlist
                             ? "Remove from Watchlist"
                             : "Add to Watchlist"}
-                    </button>
+                    </Button>
                 </div>
             </div>
 

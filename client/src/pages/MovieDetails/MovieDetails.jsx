@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { API_URL } from "../../config";
 import { submitReview } from "../../services/reviewService";
+import Button from "../../components/Button/Button";
 import ReviewForm from "../../components/ReviewForm/ReviewForm";
 import styles from "./MovieDetails.module.css";
 
@@ -226,15 +227,14 @@ function MovieDetails() {
                         )}
                     </div>
 
-                    <button
-                        type="button"
+                    <Button
                         onClick={() => {
                             setReviewError("");
                             setShowReviewForm(true);
                         }}
                     >
                         Write a Review
-                    </button>
+                    </Button>
                 </div>
             </div>
 
@@ -250,8 +250,7 @@ function MovieDetails() {
                     <p>{myReview.comment}</p>
 
                     <div className={styles.reviewActions}>
-                        <button
-                            type="button"
+                        <Button
                             disabled={submitting}
                             onClick={() => {
                                 setReviewError("");
@@ -259,15 +258,15 @@ function MovieDetails() {
                             }}
                         >
                             Edit
-                        </button>
+                        </Button>
 
-                        <button
-                            type="button"
+                        <Button
+                            variant="secondary"
                             disabled={submitting}
                             onClick={handleDeleteReview}
                         >
                             Delete
-                        </button>
+                        </Button>
                     </div>
 
                     {reviewError && !editingReview && !showReviewForm && (

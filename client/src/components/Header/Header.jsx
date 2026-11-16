@@ -1,7 +1,9 @@
 //Hayes Meekins
-import styles from "./Header.module.css";
+
 import { NavLink } from "react-router-dom";
+import Button from "../Button/Button";
 import popcorn from "../../assets/popcorn.png";
+import styles from "./Header.module.css";
 
 function Header() {
     return(
@@ -16,7 +18,7 @@ function Header() {
                     <li><NavLink to="/movies" className={({ isActive }) => isActive ? styles.active : ""}>My Movies</NavLink></li>
                     <li><NavLink to="/watchlist" className={({ isActive }) => isActive ? styles.active : ""}>Watchlist</NavLink></li>
                     <li><NavLink to="/browse" className={({ isActive }) => isActive ? styles.active : ""}>Browse</NavLink></li>
-                    <li><NavLink to="/signup" className={styles.signup}>Sign Up</NavLink></li>
+                    <li><Button to="/signup">Sign Up</Button></li>
                 </ul>
             </nav>
         </header>

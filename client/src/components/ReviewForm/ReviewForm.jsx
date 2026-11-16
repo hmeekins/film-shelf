@@ -1,6 +1,7 @@
 // Hayes Meekins
 
 import { useState } from "react";
+import Button from "../Button/Button";
 import styles from "./ReviewForm.module.css";
 
 function ReviewForm({movieTitle, review = null, onClose, onSubmit, submitting, error}) {
@@ -80,18 +81,17 @@ function ReviewForm({movieTitle, review = null, onClose, onSubmit, submitting, e
                     {error && <p className={styles.error}>{error}</p>}
 
                     <div className={styles.actions}>
-                        <button
+                        <Button
+                            variant="secondary"
                             type="button"
-                            className={styles.cancel}
                             onClick={onClose}
                             disabled={submitting}
                         >
                             Cancel
-                        </button>
+                        </Button>
 
-                        <button
+                        <Button
                             type="submit"
-                            className={styles.submit}
                             disabled={
                                 submitting ||
                                 rating === 0 ||
@@ -99,7 +99,7 @@ function ReviewForm({movieTitle, review = null, onClose, onSubmit, submitting, e
                             }
                         >
                             {submitting ? "Saving..." : review ? "Save Changes" : "Submit Review"}
-                        </button>
+                        </Button>
                     </div>
                 </form>
             </div>

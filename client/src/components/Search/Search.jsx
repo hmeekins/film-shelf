@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import TextInput from "../TextInput/TextInput";
+import Button from "../Button/Button";
 import styles from "./Search.module.css";
 
 function Search({ onSearch }) {
@@ -27,9 +28,9 @@ function Search({ onSearch }) {
                 maxLength={100}
             />
 
-            <button type="submit">
+            <Button type="submit">
                 Search
-            </button>
+            </Button>
         </form>
     );
 }
