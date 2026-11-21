@@ -5,6 +5,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const connectDB = require("./models/db");
+const session = require("express-session");
 const movieRoutes = require("./routes/movieRoutes");
 const reviewRoutes = require("./routes/reviewRoutes");
 const tmdbRoutes = require("./routes/tmdbRoutes");
@@ -13,7 +14,20 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors({
-    origin: process.env.CLIENT_ORIGIN || "http://localhost:5173"
+    origin: process.env.CLIENT_ORIGIN || "http://localhost:5173",
+    credentials: true
+}));
+
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        maxAge: 1000 * 60 * 60
+    }
 }));
 
 app.use(express.json());
