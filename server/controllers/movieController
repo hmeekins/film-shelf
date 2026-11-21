@@ -46,10 +46,17 @@ async function createMovie(req, res, next) {
                 title: tmdbMovie.title,
                 posterPath: tmdbMovie.posterPath,
             }},
-            { upsert: true, new: true, runValidators: true }
+            { 
+                upsert: true, 
+                new: true, 
+                runValidators: true,
+                includeResultMetadata: true
+            }
         );
+        
+        const created = !movie.lastErrorObject.updatedExisting;
 
-        res.status(200).json(movie);
+        res.status(created ? 201 : 200).json(movie.value);
     } catch (error) {
         next(error);
     }
