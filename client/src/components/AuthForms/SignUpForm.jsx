@@ -76,6 +76,7 @@ function SignUpForm({onSwitch}) {
                 credentials: "include",
                 body: JSON.stringify({
                     email: form.email,
+                    username: form.username,
                     password: form.password
                 })
             });

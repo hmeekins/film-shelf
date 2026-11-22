@@ -5,11 +5,21 @@ const User = require("../models/User");
 
 async function register(req, res, next) {
     try {
-        const { email, password } = req.body;
+        const { username, email, password } = req.body;
 
-        if (typeof email !== "string" || typeof password !== "string") {
+        if (
+            typeof username !== "string" ||
+            typeof email !== "string" ||
+            typeof password !== "string"
+        ) {
             return res.status(400).json({
-                message: "Email and password are required"
+                message: "Username, email, and password are required"
+            });
+        }
+
+        if (username.trim().length < 4) {
+            return res.status(400).json({
+                message: "Username must be at least 4 characters"
             });
         }
 
@@ -20,25 +30,31 @@ async function register(req, res, next) {
         }
 
         const existingUser = await User.findOne({
-            email: email.trim().toLowerCase()
+            $or: [
+                { username: username.trim().toLowerCase() },
+                { email: email.trim().toLowerCase() }
+            ]
         });
 
         if (existingUser) {
             return res.status(409).json({
-                message: "Email already registered"
+                message: "Username or email already registered"
             });
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
         const user = await User.create({
+            username,
             email,
             password: hashedPassword
         });
 
         res.status(201).json({
             id: user._id,
-            email: user.email
+            username: user.username,
+            email: user.email,
+            profilePicture: user.profilePicture
         });
     } catch (error) {
         next(error);
@@ -47,16 +63,26 @@ async function register(req, res, next) {
 
 async function login(req, res, next) {
     try {
-        const { email, password } = req.body;
+        const { identifier, password } = req.body;
 
-        if (typeof email !== "string" || typeof password !== "string") {
+        if (
+            typeof identifier !== "string" ||
+            typeof password !== "string" ||
+            !identifier.trim() ||
+            !password
+        ) {
             return res.status(400).json({
-                message: "Email and password are required"
+                message: "Username or email and password are required"
             });
         }
 
+        const loginIdentifier = identifier.trim().toLowerCase();
+
         const user = await User.findOne({
-            email: email.trim().toLowerCase()
+            $or: [
+                { username: loginIdentifier },
+                { email: loginIdentifier }
+            ]
         });
 
         const validPassword = user
@@ -65,20 +91,20 @@ async function login(req, res, next) {
 
         if (!validPassword) {
             return res.status(401).json({
-                message: "Invalid email or password"
+                message: "Invalid username/email or password"
             });
         }
 
         req.session.regenerate((error) => {
-            if (error) {
-                return next(error);
-            }
+            if (error) return next(error);
 
             req.session.userId = user._id;
 
             res.status(200).json({
                 id: user._id,
-                email: user.email
+                username: user.username,
+                email: user.email,
+                profilePicture: user.profilePicture
             });
         });
     } catch (error) {
@@ -105,7 +131,9 @@ async function me(req, res, next) {
 
         res.status(200).json({
             id: user._id,
-            email: user.email
+            username: user.username,
+            email: user.email,
+            profilePicture: user.profilePicture
         });
     } catch (error) {
         next(error);
