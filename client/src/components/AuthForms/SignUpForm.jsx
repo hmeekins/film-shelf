@@ -4,7 +4,7 @@ import { useState } from "react";
 import { API_URL } from "../../config";
 import TextInput from "../TextInput/TextInput";
 import Button from "../Button/Button";
-import styles from "./SignUpForm.module.css";
+import styles from "./AuthForm.module.css";
 
 function SignUpForm({onSwitch}) {
 
@@ -96,7 +96,7 @@ function SignUpForm({onSwitch}) {
     }
 
     return (
-        <div className={styles.signUp}>
+        <div className={styles.auth}>
             <h2>Sign Up</h2>
 
             <form className={styles.form} onSubmit={handleSubmit}>
@@ -179,9 +179,15 @@ function SignUpForm({onSwitch}) {
                     )}
                 
             </form>
-            <p className={styles.loginLink}>Have an account? <button onClick={onSwitch} className={styles.loginButton}>
-                Log in
-            </button></p>
+            <p className={styles.switchInfo}
+                >Have an account?{" "}
+                <button 
+                    onClick={onSwitch} 
+                    className={styles.switchButton}
+                >
+                    Log in
+                </button>
+            </p>
         </div>
     );
 }

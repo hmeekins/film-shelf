@@ -30,11 +30,56 @@ function Header({ menuOpen, setMenuOpen }) {
 
             <nav className={`${styles.nav} ${menuOpen ? styles.open : ""}`}>
                 <ul>
-                    <li><NavLink to="/" onClick={closeMenu} className={({ isActive }) => isActive ? styles.active : ""}>Home</NavLink></li>
-                    <li><NavLink to="/movies" onClick={closeMenu} className={({ isActive }) => isActive ? styles.active : ""}>My Movies</NavLink></li>
-                    <li><NavLink to="/watchlist" onClick={closeMenu} className={({ isActive }) => isActive ? styles.active : ""}>Watchlist</NavLink></li>
-                    <li><NavLink to="/browse" onClick={closeMenu} className={({ isActive }) => isActive ? styles.active : ""}>Browse</NavLink></li>
-                    <li><Button to="/signup">Sign Up</Button></li>
+                    <li><NavLink 
+                            to="/" onClick={closeMenu} 
+                            className={({ isActive }) => 
+                                `${styles.navLink} ${isActive ? styles.active : ""}`
+                            }
+                        >
+                            Home
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink 
+                            to="/movies" 
+                            onClick={closeMenu} 
+                            className={({ isActive }) => 
+                                `${styles.navLink} ${isActive ? styles.active : ""}`
+                            }
+                        >
+                            My Movies
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink 
+                            to="/watchlist" 
+                            onClick={closeMenu} 
+                            className={({ isActive }) => 
+                                `${styles.navLink} ${isActive ? styles.active : ""}`
+                            }
+                        >
+                            Watchlist
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink 
+                            to="/browse" 
+                            onClick={closeMenu} 
+                            className={({ isActive }) => 
+                                `${styles.navLink} ${isActive ? styles.active : ""}`
+                            }
+                        >
+                            Browse
+                        </NavLink>
+                    </li>
+                    <li>
+                        <Button 
+                            to="/auth?mode=signup" 
+                            onClick={closeMenu}
+                        >
+                            Sign Up
+                        </Button>
+                    </li>
                 </ul>
             </nav>
         </header>

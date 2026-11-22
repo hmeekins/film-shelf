@@ -31,16 +31,16 @@
     list-style: none;
 }
 
-.nav a {
+.navLink{
     color: var(--color-text);
     text-decoration: none;
 }
 
-.nav a:hover {
+.navLink:hover {
     color: var(--color-accent);
 }
 
-.nav a.active {
+.navLink.active {
     color: var(--color-accent);
     padding-bottom: .4rem;
     border-bottom: 3px solid var(--color-accent);
