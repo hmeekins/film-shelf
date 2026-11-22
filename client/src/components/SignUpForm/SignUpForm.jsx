@@ -1,15 +1,12 @@
-
- // Hayes Meekins
+// Hayes Meekins
 
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { API_URL } from "../../config";
 import TextInput from "../TextInput/TextInput";
 import Button from "../Button/Button";
 import styles from "./SignUpForm.module.css";
 
-function SignUpForm() {
-    const navigate = useNavigate();
+function SignUpForm({onSwitch}) {
 
     const [form, setForm] = useState({
         username: "",
@@ -90,7 +87,7 @@ function SignUpForm() {
                 return;
             }
 
-            navigate("/login");
+            onSwitch();
         } catch (error) {
             setServerError("Unable to connect to the server");
         } finally {
@@ -171,7 +168,7 @@ function SignUpForm() {
                         </p>
                     )}
                 </div>
-
+                
                 <Button type="submit" disabled={submitting}>
                     {submitting ? "Creating Account..." : "Sign Up"}
                 </Button>
@@ -182,6 +179,9 @@ function SignUpForm() {
                     )}
                 
             </form>
+            <p className={styles.loginLink}>Have an account? <button onClick={onSwitch} className={styles.loginButton}>
+                Log in
+            </button></p>
         </div>
     );
 }
