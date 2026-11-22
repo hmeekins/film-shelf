@@ -86,7 +86,46 @@ async function login(req, res, next) {
     }
 }
 
+async function me(req, res, next) {
+    try {
+        if (!req.session.userId) {
+            return res.status(401).json({
+                message: "Not authenticated"
+            });
+        }
+
+        const user = await User.findById(req.session.userId)
+            .select("-password");
+
+        if (!user) {
+            return res.status(401).json({
+                message: "Not authenticated"
+            });
+        }
+
+        res.status(200).json({
+            id: user._id,
+            email: user.email
+        });
+    } catch (error) {
+        next(error);
+    }
+}
+
+function logout(req, res, next) {
+    req.session.destroy((error) => {
+        if (error) {
+            return next(error);
+        }
+
+        res.clearCookie("connect.sid");
+        res.sendStatus(204);
+    });
+}
+
 module.exports = {
     register,
-    login
+    login,
+    me,
+    logout
 };
