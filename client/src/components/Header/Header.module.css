@@ -55,6 +55,12 @@
     cursor: pointer;
 }
 
+.profileLink {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 @media (max-width: 900px) {
     .headerTop {
         display: flex;

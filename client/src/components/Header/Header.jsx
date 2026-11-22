@@ -1,11 +1,15 @@
 // Hayes Meekins
 
 import { NavLink } from "react-router-dom";
+import { useCurrentUser } from "../../hooks/useCurrentUser";
+import ProfilePicture from "../ProfilePicture/ProfilePicture";
 import Button from "../Button/Button";
 import popcorn from "../../assets/popcorn.png";
 import styles from "./Header.module.css";
 
 function Header({ menuOpen, setMenuOpen }) {
+    const { user, loading } = useCurrentUser();
+
     function closeMenu() {
         setMenuOpen(false);
     }
@@ -73,13 +77,22 @@ function Header({ menuOpen, setMenuOpen }) {
                         </NavLink>
                     </li>
                     <li>
-                        <Button 
-                            to="/auth?mode=signup" 
-                            onClick={closeMenu}
-                        >
-                            Sign Up
-                        </Button>
-                    </li>
+                        {!loading && (
+                            user ? (
+                                <NavLink
+                                    to="/account"
+                                    onClick={closeMenu}
+                                    className={styles.profileLink}
+                                    aria-label="My Account"
+                                >
+                                    <ProfilePicture user={user} />
+                                </NavLink>
+                            ) : (
+                                <Button to="/auth?mode=signup">Sign Up</Button>
+                            )
+                        )
+                    }
+                </li>
                 </ul>
             </nav>
         </header>

@@ -1,0 +1,9 @@
+/* Hayes Meekins */
+
+.profilePicture {
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--color-accent);
+    box-sizing: border-box;
+    flex-shrink: 0;
+}

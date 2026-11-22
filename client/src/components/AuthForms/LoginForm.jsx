@@ -3,12 +3,14 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { API_URL } from "../../config";
+import { useCurrentUser } from "../../hooks/useCurrentUser";
 import TextInput from "../TextInput/TextInput";
 import Button from "../Button/Button";
 import styles from "./AuthForm.module.css";
 
 function LoginForm({ onSwitch }) {
     const navigate = useNavigate();
+    const { setUser } = useCurrentUser();
 
     const [form, setForm] = useState({
         identifier: "",
@@ -67,7 +69,8 @@ function LoginForm({ onSwitch }) {
                 setIdentifierError(data.message || "Unable to log in");
                 return;
             }
-
+            
+            setUser(data);
             navigate("/");
         } catch (error) {
             setIdentifierError("Unable to connect to the server");
