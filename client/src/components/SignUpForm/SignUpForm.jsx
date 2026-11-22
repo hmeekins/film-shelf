@@ -2,24 +2,30 @@
  // Hayes Meekins
 
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { API_URL } from "../../config";
 import TextInput from "../TextInput/TextInput";
 import Button from "../Button/Button";
 import styles from "./SignUpForm.module.css";
 
 function SignUpForm() {
+    const navigate = useNavigate();
+
     const [form, setForm] = useState({
         username: "",
         email: "",
         password: "",
         confirmPassword: ""
     });
-
+    
     const [usernameError, setUsernameError] = useState("");
     const [emailError, setEmailError] = useState("");
     const [passwordError, setPasswordError] = useState("");
+    const [serverError, setServerError] = useState("");
+    const [submitting, setSubmitting] = useState(false);
 
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/;
+    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
 
     function handleChange(e) {
         const { name, value } = e.target;
@@ -30,7 +36,7 @@ function SignUpForm() {
         return emailPattern.test(form.email);
     }
 
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault();
 
         let error = false;
@@ -38,6 +44,7 @@ function SignUpForm() {
         setUsernameError(null);
         setEmailError(null);
         setPasswordError(null);
+        setServerError("");
 
         if (form.username.length < 4) {
             setUsernameError("Must be at least 4 characters");
@@ -61,7 +68,34 @@ function SignUpForm() {
             return;
         }
 
-        console.log(form);
+        try {
+            setSubmitting(true);
+
+            const response = await fetch(`${API_URL}/api/auth/register`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                credentials: "include",
+                body: JSON.stringify({
+                    email: form.email,
+                    password: form.password
+                })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                setServerError(data.message || "Unable to create account");
+                return;
+            }
+
+            navigate("/login");
+        } catch (error) {
+            setServerError("Unable to connect to the server");
+        } finally {
+            setSubmitting(false);
+        }
     }
 
     return (
@@ -113,7 +147,7 @@ function SignUpForm() {
                         placeholder="Password"
                     />
                     <p className={styles.requirements}>
-                        Password must be at least 6 characters and
+                        Password must be at least 8 characters and
                         contain at least one digit, lowercase letter
                         and uppercase letter.
                     </p>
@@ -138,11 +172,15 @@ function SignUpForm() {
                     )}
                 </div>
 
-                <Button
-                    type="submit"
-                >
-                    Sign Up
+                <Button type="submit" disabled={submitting}>
+                    {submitting ? "Creating Account..." : "Sign Up"}
                 </Button>
+                    {serverError && (
+                        <p className={styles.serverError}>
+                            {serverError}
+                        </p>
+                    )}
+                
             </form>
         </div>
     );
