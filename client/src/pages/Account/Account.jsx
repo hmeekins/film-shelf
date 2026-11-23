@@ -1,7 +1,7 @@
 // Hayes Meekins
 
 import { useCurrentUser } from "../../hooks/useCurrentUser";
-import ProfilePicture from "../../components/ProfilePicture/ProfilePicture";
+import ProfilePictureUpload from "../../components/ProfilePictureUpload/ProfilePictureUpload";
 import styles from "./Account.module.css";
 
 function Account() {
@@ -19,7 +19,7 @@ function Account() {
         <div className={styles.account}>
             <div className={styles.profileSection}>
                 <div className={styles.profileHeader}>
-                    <ProfilePicture user={user} size={140} />
+                    <ProfilePictureUpload user={user} size={140} />
 
                     <div className={styles.profileInfo}>
                         <h1>{user.username}</h1>

@@ -1,0 +1,49 @@
+/* Hayes Meekins */
+
+.upload {
+    position: relative;
+    width: 140px;
+    height: 140px;
+}
+
+.uploadButton {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: none;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    background-color: rgba(0, 0, 0, 0.65);
+    color: white;
+    opacity: 0;
+    transition: opacity 0.2s;
+    font-size: 0.85rem;
+    font-weight: bold;
+}
+
+.overlay span:first-child {
+    font-size: 1.5rem;
+}
+
+.uploadButton:hover .overlay,
+.uploadButton:focus-visible .overlay {
+    opacity: 1;
+}
+
+.fileInput {
+    display: none;
+}
