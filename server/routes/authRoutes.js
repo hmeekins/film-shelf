@@ -13,8 +13,6 @@ const {
     uploadProfilePicture
 } = require("../controllers/authController");
 
-const requireAuth = require("../middleware/requireAuth");
-
 const router = express.Router();
 
 const storage = multer.diskStorage({
@@ -52,7 +50,6 @@ router.post("/logout", logout);
 
 router.post(
     "/profile-picture",
-    requireAuth,
     upload.single("image"),
     uploadProfilePicture
 );
