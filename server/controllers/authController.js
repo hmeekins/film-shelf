@@ -151,9 +151,41 @@ function logout(req, res, next) {
     });
 }
 
+async function uploadProfilePicture(req, res, next) {
+    try {
+        if (!req.file) {
+            return res.status(400).json({
+                error: "Please upload a JPEG, PNG, or WebP image."
+            });
+        }
+
+        const user = await User.findByIdAndUpdate(
+            req.session.userId,
+            { profilePicture: req.file.filename },
+            { new: true }
+        ).select("-password");
+
+        if (!user) {
+            return res.status(404).json({
+                error: "User not found."
+            });
+        }
+
+        res.json({
+            id: user._id,
+            username: user.username,
+            email: user.email,
+            profilePicture: user.profilePicture
+        });
+    } catch (error) {
+        next(error);
+    }
+}
+
 module.exports = {
     register,
     login,
     me,
-    logout
+    logout,
+    uploadProfilePicture
 };

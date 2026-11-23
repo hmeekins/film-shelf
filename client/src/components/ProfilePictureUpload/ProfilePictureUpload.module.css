@@ -35,10 +35,6 @@
     font-weight: bold;
 }
 
-.overlay span:first-child {
-    font-size: 1.5rem;
-}
-
 .uploadButton:hover .overlay,
 .uploadButton:focus-visible .overlay {
     opacity: 1;

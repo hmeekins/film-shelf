@@ -6,6 +6,7 @@ const express = require("express");
 const cors = require("cors");
 const connectDB = require("./models/db");
 const session = require("express-session");
+const multer = require("multer");
 const movieRoutes = require("./routes/movieRoutes");
 const reviewRoutes = require("./routes/reviewRoutes");
 const tmdbRoutes = require("./routes/tmdbRoutes");
@@ -38,6 +39,8 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use("/uploads", express.static("uploads"));
+
 app.use("/api/movies", movieRoutes);
 app.use("/api/reviews", reviewRoutes);
 app.use("/api/tmdb", tmdbRoutes);
@@ -67,6 +70,12 @@ app.use((err, req, res, next) => {
     if (err.name === "ValidationError") {
         return res.status(400).json({
             message: err.message
+        });
+    }
+
+    if (err instanceof multer.MulterError) {
+        return res.status(400).json({
+            error: err.message
         });
     }
 
