@@ -1,6 +1,8 @@
 // Hayes Meekins
 
 const bcrypt = require("bcrypt");
+const fs = require("fs/promises");
+const path = require("path");
 const User = require("../models/User");
 
 async function register(req, res, next) {
@@ -151,6 +153,20 @@ function logout(req, res, next) {
     });
 }
 
+async function deleteProfilePicture(filename) {
+    if (!filename) {
+        return;
+    }
+
+    try {
+        await fs.unlink(path.join("uploads", filename));
+    } catch (error) {
+        if (error.code !== "ENOENT") {
+            console.error("Error deleting profile picture:", error);
+        }
+    }
+}
+
 async function uploadProfilePicture(req, res, next) {
     try {
         if (!req.file) {
@@ -159,17 +175,23 @@ async function uploadProfilePicture(req, res, next) {
             });
         }
 
-        const user = await User.findByIdAndUpdate(
-            req.session.userId,
-            { profilePicture: req.file.filename },
-            { new: true }
-        ).select("-password");
+        const user = await User.findById(req.session.userId);
 
         if (!user) {
+            await deleteProfilePicture(req.file.filename);
+
             return res.status(404).json({
                 error: "User not found."
             });
         }
+
+        const oldProfilePicture = user.profilePicture;
+
+        user.profilePicture = req.file.filename;
+
+        await user.save();
+
+        await deleteProfilePicture(oldProfilePicture);
 
         res.json({
             id: user._id,

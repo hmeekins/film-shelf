@@ -50,8 +50,8 @@ router.get("/me", me);
 router.post("/logout", logout);
 
 router.post(
-    requireAuth,
     "/profile-picture",
+    requireAuth,
     upload.single("image"),
     uploadProfilePicture
 );
