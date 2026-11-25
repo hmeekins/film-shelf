@@ -4,6 +4,7 @@ const express = require("express");
 const multer = require("multer");
 const path = require("path");
 const crypto = require("crypto");
+const requireAuth = require("../middleware/requireAuth");
 
 const {
     register,
@@ -49,6 +50,7 @@ router.get("/me", me);
 router.post("/logout", logout);
 
 router.post(
+    requireAuth,
     "/profile-picture",
     upload.single("image"),
     uploadProfilePicture
