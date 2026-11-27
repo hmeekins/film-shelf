@@ -83,7 +83,7 @@ function LoginForm({ onSwitch }) {
         <div className={styles.auth}>
             <h2>Log In</h2>
 
-            <form className={`${styles.form} ${styles.login}`} onSubmit={handleSubmit}>
+            <form className={styles.form} onSubmit={handleSubmit}>
                 <div className={styles.formElement}>
                     <label htmlFor="identifier">Username or Email</label>
                     <TextInput

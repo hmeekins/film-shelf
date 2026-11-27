@@ -2,6 +2,7 @@
 
 import { useCurrentUser } from "../../hooks/useCurrentUser";
 import ProfilePictureUpload from "../../components/ProfilePictureUpload/ProfilePictureUpload";
+import Button from "../../components/Button/Button";
 import styles from "./Account.module.css";
 
 function Account() {
@@ -41,9 +42,7 @@ function Account() {
                     </div>
 
                     <div className={styles.accountActions}>
-                        <button type="button" disabled>
-                            Change Password
-                        </button>
+                        <Button to="/account/change-password"> Change Password </Button>
 
                         <button
                             type="button"
