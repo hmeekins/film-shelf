@@ -1,7 +1,8 @@
 // Hayes Meekins
 
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { API_URL } from "../../config";
 import TextInput from "../TextInput/TextInput";
 import Button from "../Button/Button";
 import styles from "./AuthForm.module.css";
@@ -15,21 +16,26 @@ function ChangePasswordForm() {
 
     const [currentPasswordError, setCurrentPasswordError] = useState("");
     const [passwordError, setPasswordError] = useState("");
+    const [serverError, setServerError] = useState("");
+    const [submitting, setSubmitting] = useState(false);
 
     const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+
+    const navigate = useNavigate();
 
     function handleChange(e) {
         const { name, value } = e.target;
         setForm({ ...form, [name]: value });
     }
 
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault();
 
         let error = false;
 
         setCurrentPasswordError("");
         setPasswordError("");
+        setServerError("");
 
         if (!form.currentPassword) {
             setCurrentPasswordError("Enter your current password");
@@ -51,6 +57,41 @@ function ChangePasswordForm() {
             return;
         }
 
+        try {
+            setSubmitting(true);
+
+            const response = await fetch(`${API_URL}/api/auth/password`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                credentials: "include",
+                body: JSON.stringify({
+                    currentPassword: form.currentPassword,
+                    newPassword: form.newPassword
+                })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                const message = data.message || data.error || "Unable to change password";
+                if (message === "Current password is incorrect") {
+                    setCurrentPasswordError(message);
+                }
+                else {
+                    setServerError(message);
+                }   
+                return;
+            }
+
+            navigate("/account");
+
+        } catch (error) {
+            setServerError("Unable to connect to the server");
+        } finally {
+            setSubmitting(false);
+        }
     }
 
     return (
@@ -121,19 +162,16 @@ function ChangePasswordForm() {
                     )}
                 </div>
 
-                <Button type="submit">
-                    Change Password
+                <Button type="submit" disabled={submitting}>
+                    {submitting ? "Changing Password..." : "Change Password"}
                 </Button>
-            </form>
 
-            <p className={styles.switchInfo}>
-                <Link
-                    to="/account"
-                    className={styles.switchButton}
-                >
-                    Back to Account
-                </Link>
-            </p>
+                {serverError && (
+                    <p className={styles.serverError}>
+                        {serverError}
+                    </p>
+            )}
+            </form>
         </div>
     );
 }

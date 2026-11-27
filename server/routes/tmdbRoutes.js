@@ -3,7 +3,7 @@ const {
     getMovie,
     getPopular,
     getSearch
-} = require("../controllers/tmdbController");
+} = require("../controllers/tmdbController.js");
 
 const router = express.Router();
 

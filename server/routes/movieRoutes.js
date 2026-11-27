@@ -8,7 +8,7 @@ const {
     getMovieById, 
     createMovie, 
     deleteMovie 
-} = require("../controllers/movieController");
+} = require("../controllers/movieController.js");
 
 const { body } = require("express-validator");
 

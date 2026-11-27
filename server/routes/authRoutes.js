@@ -58,7 +58,7 @@ router.post(
     uploadProfilePicture
 );
 
-router.post("/change-password", requireAuth, changePassword);
+router.put("/password", requireAuth, changePassword);
 router.delete("/delete-account", requireAuth, deleteAccount);
 
 module.exports = router;
