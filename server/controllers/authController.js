@@ -204,10 +204,127 @@ async function uploadProfilePicture(req, res, next) {
     }
 }
 
+async function changePassword(req, res, next) {
+    try {
+        const { currentPassword, newPassword } = req.body;
+
+        const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+
+        if (typeof currentPassword !== "string" || !currentPassword) {
+            return res.status(400).json({
+                message: "Current password is required"
+            });
+        }
+
+        if (
+            typeof newPassword !== "string" ||
+            !passwordPattern.test(newPassword) ||
+            Buffer.byteLength(newPassword, "utf8") > 72
+        ) {
+            return res.status(400).json({
+                message: "New password does not meet requirements"
+            });
+        }
+
+        const user = await User.findById(req.session.userId);
+
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found"
+            });
+        }
+
+        const passwordMatch = await bcrypt.compare(
+            currentPassword,
+            user.password
+        );
+
+        if (!passwordMatch) {
+            return res.status(400).json({
+                message: "Current password is incorrect"
+            });
+        }
+
+        if (await bcrypt.compare(newPassword, user.password)) {
+            return res.status(400).json({
+                message: "New password must be different"
+            });
+        }
+
+        user.password = await bcrypt.hash(newPassword, 10);
+        await user.save();
+
+        res.status(200).json({
+            message: "Password changed successfully"
+        });
+    } catch (error) {
+        next(error);
+    }
+}
+
+async function deleteAccount(req, res, next) {
+    try {
+        const { username, password } = req.body;
+
+        if (
+            typeof username !== "string" ||
+            typeof password !== "string" ||
+            !username.trim() ||
+            !password
+        ) {
+            return res.status(400).json({
+                message: "Username and password are required"
+            });
+        }
+
+        const user = await User.findById(req.session.userId);
+
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found"
+            });
+        }
+
+        if (username.trim().toLowerCase() !== user.username) {
+            return res.status(400).json({
+                message: "Username does not match"
+            });
+        }
+
+        const passwordMatch = await bcrypt.compare(
+            password,
+            user.password
+        );
+
+        if (!passwordMatch) {
+            return res.status(400).json({
+                message: "Password is incorrect"
+            });
+        }
+
+        await User.findByIdAndDelete(user._id);
+
+        await deleteProfilePicture(user.profilePicture);
+
+        req.session.destroy((error) => {
+            if (error) {
+                return next(error);
+            }
+
+            res.clearCookie("connect.sid");
+            res.status(204).end();
+        });
+    } catch (error) {
+        next(error);
+    }
+}
+
 module.exports = {
     register,
     login,
     me,
     logout,
-    uploadProfilePicture
+    uploadProfilePicture,
+    changePassword,
+    deleteAccount
 };

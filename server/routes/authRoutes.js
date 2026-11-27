@@ -11,7 +11,9 @@ const {
     login,
     me,
     logout,
-    uploadProfilePicture
+    uploadProfilePicture,
+    changePassword,
+    deleteAccount
 } = require("../controllers/authController");
 
 const router = express.Router();
@@ -55,5 +57,8 @@ router.post(
     upload.single("image"),
     uploadProfilePicture
 );
+
+router.post("/change-password", requireAuth, changePassword);
+router.delete("/delete-account", requireAuth, deleteAccount);
 
 module.exports = router;
